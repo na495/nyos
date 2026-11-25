@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="notes/image/favicon.png" />
+    <title>nyos 🐱</title>
+
+    <!-- 테마 -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <script>
+      try {
+        const size = parseInt(localStorage.getItem("fontSize"), 10);
+        if (size) document.documentElement.style.setProperty("--root-fs", size + "px");
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- 글씨 크기 조절 -->
+    <div class="font-ctrl">
+      <button type="button" id="font-down" aria-label="글씨 작게">A−</button>
+      <button type="button" id="font-size" class="font-ctrl-size" title="기본 크기로">100%</button>
+      <button type="button" id="font-up" aria-label="글씨 크게">A+</button>
+    </div>
+    <script src="font-ctrl.js"></script>
+    <script>
+      window.$docsify = {
+        name: "nyos 🐱",
+        repo: "https://github.com/na495/nyos",
+        homepage: "index.md",
+        themeColor: "#558BCF",
+
+        loadSidebar: true,
+        subMaxLevel: 2,
+        relativePath: true,
+        auto2top: true,
+
+        search: { placeholder: "검색", noData: "결과 없음" },
+
+        copyCode: {
+          buttonText:
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+          successText:
+            '<svg viewBox="0 0 24 24" fill="none" stroke="#42b983" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+          errorText:
+            '<svg viewBox="0 0 24 24" fill="none" stroke="#e5534b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+        },
+
+        plugins: [
+          // 탭 제목 고정
+          (hook) => hook.doneEach(() => (document.title = "nyos 🐱")),
+
+          // shell-session: "$ " 공백 드래그 제외
+          (hook) =>
+            hook.doneEach(() => {
+              document.querySelectorAll('pre[data-lang="shell-session"] .token.shell-symbol').forEach((sym) => {
+                const next = sym.nextSibling;
+                if (next && next.nodeType === Node.TEXT_NODE) {
+                  const space = next.textContent.match(/^\s+/);
+                  if (space) {
+                    sym.textContent += space[0];
+                    next.textContent = next.textContent.slice(space[0].length);
+                  }
+                }
+              });
+            }),
+        ],
+      };
+    </script>
+
+    <!-- docsify + 플러그인 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3"></script>
+
+    <!-- 코드 하이라이팅 (shell-session은 bash 뒤에 와야 함) -->
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-c.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-armasm.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-makefile.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-shell-session.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js"></script>
+
+    <!-- mermaid -->
+    <script src="//cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: false });
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.js"></script>
+  </body>
+</html>

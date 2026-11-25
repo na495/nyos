@@ -1,0 +1,196 @@
+/* ==========================================================
+   1. 변수 · 기준 크기
+   ========================================================== */
+:root {
+  --theme: #558bcf; /* 포인트 색 (링크, 버튼 hover 등) */
+  --text: #34495e; /* 본문 글자색 */
+  --code-bg: #f7f8fa; /* 코드 블록 배경 */
+  --code-border: #e8eaee; /* 코드 블록 테두리 */
+  --inline-code-bg: #f0f1f3; /* 인라인 코드 배경 */
+}
+html {
+  font-size: var(--root-fs, 15px); /* 전체 rem 기준 → 글씨 크기 버튼이 이 값을 바꿈 */
+}
+
+/* ==========================================================
+   2. 폰트
+   ========================================================== */
+body,
+.markdown-section {
+  font-family:
+    "IBM Plex Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+.markdown-section code,
+.markdown-section pre {
+  font-family: "JetBrains Mono", monospace;
+  -webkit-font-smoothing: antialiased; /* 코드 글자 두께를 본문과 맞춤 */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================
+   3. 글씨 크기 버튼 연동
+      vue 테마의 px 고정값을 rem으로 바꿔서 같이 커지게 함
+   ========================================================== */
+body {
+  font-size: 1rem; /* 본문 */
+}
+.sidebar ul li a {
+  font-size: 0.93rem; /* 사이드바 목록 */
+}
+.sidebar > h1 {
+  font-size: 1.5rem; /* 사이드바 사이트 이름 */
+}
+.search input {
+  font-size: 0.93rem; /* 검색창 */
+}
+
+/* ==========================================================
+   4. 본문 · 리스트
+   ========================================================== */
+.markdown-section {
+  color: var(--text);
+  line-height: 1.7;
+}
+.markdown-section p {
+  margin: 0.6em 0;
+}
+.markdown-section p + ul,
+.markdown-section p + ol {
+  margin-top: 0.2em; /* 문단 바로 뒤 리스트는 붙여서 */
+}
+.markdown-section li {
+  margin: 0.2em 0;
+  line-height: 1.6;
+}
+.markdown-section ol ul {
+  list-style-type: circle; /* 번호 리스트 안의 불렛은 ○ */
+}
+
+/* ==========================================================
+   5. 인라인 코드
+   ========================================================== */
+.markdown-section :not(pre) > code {
+  color: #2c3e50;
+  background-color: var(--inline-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* ==========================================================
+   6. 코드 블록
+   ========================================================== */
+.markdown-section pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 8px;
+}
+.markdown-section pre > code {
+  background-color: transparent;
+  color: #3a4553;
+  font-size: 0.85em;
+  line-height: 1.7;
+}
+
+/* 언어 라벨: 왼쪽 위 */
+.markdown-section pre::after {
+  right: auto !important;
+  left: 0 !important;
+  color: #b0b6bf;
+  font-size: 0.7em;
+}
+
+/* 복사 버튼 */
+.docsify-copy-code-button {
+  background: transparent !important;
+  color: #aab0b8 !important;
+  padding: 6px !important;
+}
+.docsify-copy-code-button:hover {
+  color: var(--theme) !important;
+}
+.docsify-copy-code-button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* ----- ```shell-session : 명령 + 결과 ----- */
+.markdown-section pre[data-lang="shell-session"] .token.shell-symbol {
+  color: var(--theme); /* $ */
+  user-select: none; /* 드래그 복사 시 "$ " 제외 */
+}
+.markdown-section pre[data-lang="shell-session"] .token.command {
+  color: #3a4553; /* 명령 전체 */
+}
+.markdown-section pre[data-lang="shell-session"] .token.function {
+  color: #c2703d; /* sudo, apt 등 명령 이름 */
+}
+.markdown-section pre[data-lang="shell-session"] .token.output {
+  color: #9aa1ab; /* 실행 결과 */
+}
+.markdown-section pre[data-lang="shell-session"] .token.comment {
+  color: #aab0b8; /* # 주석 */
+  font-style: italic;
+}
+
+/* ----- ```output : 긴 실행 결과 ----- */
+.markdown-section pre[data-lang="output"] {
+  background-color: #fbfbfc;
+  border-style: dashed;
+}
+.markdown-section pre[data-lang="output"] > code {
+  color: #8a919b;
+}
+.markdown-section pre[data-lang="output"]::after {
+  content: "결과"; /* 언어 라벨 대신 표시 */
+}
+
+/* ==========================================================
+   7. 글씨 크기 조절 버튼
+   ========================================================== */
+.font-ctrl {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e3e6ea;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.font-ctrl button {
+  border: none;
+  background: transparent;
+  color: #6b7480;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+.font-ctrl button:hover {
+  color: var(--theme);
+  background: #f3f6fb;
+}
+.font-ctrl button:disabled {
+  color: #ccd1d7;
+  background: transparent;
+  cursor: default;
+}
+.font-ctrl .font-ctrl-size {
+  min-width: 55px;
+  font-size: 14px;
+  border-left: 1px solid #eef0f3;
+  border-right: 1px solid #eef0f3;
+}

@@ -1,0 +1,13 @@
+# nyos build files 
+build/
+*.axf
+*.bin
+*.map
+*.o
+
+# nyos docs
+docs/.obsidian
+docs/templates/
+
+# macOS defult file
+.DS_Store
